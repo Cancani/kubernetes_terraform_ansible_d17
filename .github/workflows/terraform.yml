@@ -68,6 +68,10 @@ jobs:
           pip3 install --upgrade pip
           pip3 install ansible-core boto3 awscli
 
+      - name: Install amazon.aws Ansible collection
+        run: |
+          ansible-galaxy collection install amazon.aws
+
       - name: Run Ansible Playbook
         run: |
           ansible-playbook ansible/cluster-setup.yml -i ansible/03amazon.aws_ec2.yml --private-key ./id_rsa
