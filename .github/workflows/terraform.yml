@@ -72,7 +72,7 @@ jobs:
         run: |
           ansible-galaxy collection install amazon.aws
 
-      - name: Run Ansible Playbook
+      - name: Run Ansible Inventory
         run: |
           ansible-inventory -i ansible/03amazon.aws_ec2.yml --list
 
