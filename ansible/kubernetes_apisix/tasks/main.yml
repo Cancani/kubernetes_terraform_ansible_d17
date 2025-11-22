@@ -15,7 +15,7 @@
   shell: helm install apisix apisix/apisix --namespace apisix --set gateway.type=LoadBalancer --set dashboard.enabled=true --set etcd.persistence.storageClass=nfs-client --set ingress-controller.enabled=true --set ingress-controller.config.apisix.serviceNamespace=apisix
   ignore_errors: yes
 
-- name: Pause for 1 minute to allow prometheus and ghafana to initialize
+- name: Pause for 1 minute to allow apisix to initialize
   pause:
     minutes: 1
 

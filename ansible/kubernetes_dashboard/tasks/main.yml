@@ -17,7 +17,7 @@
 
 - name: Pause for 1 minute to allow kubernetes-dashboard to initialize
   pause:
-    minutes: 2
+    minutes: 1
 
 - name: Get kubernetes-dashboard-svc service
   shell: kubectl -n kubernetes-dashboard get service kubernetes-dashboard-kong-proxy -o yaml > /tmp/kubernetes-dashboard-svc.yml

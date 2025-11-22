@@ -15,6 +15,6 @@
   shell: helm install nfs nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server={{  nfs_server_endpoint  }} --set nfs.path={{  nfs_data_Path  }} --set storageClass.onDelete=true -n nfs
   ignore_errors: yes
 
-- name: Pause for 1 minute to allow prometheus and ghafana to initialize
+- name: Pause for 1 minute to allow nfs-storageClass to initialize
   pause:
     minutes: 1 

@@ -17,7 +17,7 @@
 
 - name: Pause for 1 minute to allow Argo CD to initialize
   pause:
-    minutes: 2
+    minutes: 1
 
 - name: Get argocd-svc service
   shell: kubectl -n argocd get service argocd-server -o yaml > /tmp/argocd-svc.yml
