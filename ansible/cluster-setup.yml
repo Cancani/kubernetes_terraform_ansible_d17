@@ -1,5 +1,21 @@
 ---
 
+- name: Configure Kubernetes all nodes
+  hosts: tag_k8s
+  become: yes
+  tasks:
+    - name: Check if Kubernets is already installed
+      stat:
+        path: /kubernetes_all_nodes_doneflagfile
+      register: flagfile
+    - block:
+      - import_role: 
+         name: kubernetes_all_nodes
+      - file: 
+          path: /kubernetes_all_nodes_doneflagfile
+          state: touch
+      when: not flagfile.stat.exists
+
 - name: Configure Kubernetes Master
   hosts: tag_masternode
   become: yes
@@ -23,23 +39,6 @@
           path: /kubernetes_master_doneflagfile
           state: touch
       when: not flagfile.stat.exists
-
-- name: Configure Kubernetes all nodes
-  hosts: tag_k8s
-  become: yes
-  tasks:
-    - name: Check if Kubernets is already installed
-      stat:
-        path: /kubernetes_all_nodes_doneflagfile
-      register: flagfile
-    - block:
-      - import_role: 
-         name: kubernetes_all_nodes
-      - file: 
-          path: /kubernetes_all_nodes_doneflagfile
-          state: touch
-      when: not flagfile.stat.exists
-    
 
 - name: add multi-master node to cluster
   hosts: tag_join_master_nodes
