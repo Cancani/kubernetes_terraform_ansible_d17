@@ -31,6 +31,7 @@ variable "region" {
 variable "publickeyfile" {
   description = "File for Publickey"
   type        = string
+  default     = "../id_rsa.pub"
 }
 
 variable "cidr_block" {
