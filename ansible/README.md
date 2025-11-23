@@ -32,21 +32,25 @@ sudo apt-get install -y python3 python3-pip
 
 🛠️ Install Ansible (Control Node Only)
 
+```
 python -m venv ansible_aws
 source ansible_aws/bin/activate
 pip3 install --upgrade pip
 pip3 install ansible-core boto3 awscli
 ansible-galaxy collection install amazon.aws
+```
 
 ▶️ Run the Ansible Playbook
 
 Execute the playbook to deploy the Kubernetes cluster:
 
+```
 ansible-playbook -i 03amazon.aws_ec2.yml cluster-setup.yml -u ubuntu
+```
 
 🔍 Validate the Cluster
 
-Check the file /tmp/mastersummary.txt for the passwords of the Apps and Ports to connect.
+Check the file `/tmp/mastersummary.txt` for the passwords of the Apps and Ports to connect.
 
 📌 Conclusion
 
