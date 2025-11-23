@@ -1,0 +1,33 @@
+- name: Get all nodeport information into file /tmp/nodeport.info
+  ansible.builtin.shell:
+    cmd: (echo ========Nodeports =========; kubectl get services --all-namespaces|grep NodePort; echo) > /tmp/nodeport.info
+  become: true
+
+- name: Get all passwords information into file /tmp/password.info
+  ansible.builtin.shell:
+    cmd: echo =======Passwords========= > /tmp/password.info
+  become: true
+
+- name: Get Graphana password into file /tmp/password.info
+  ansible.builtin.shell:
+    cmd: 'echo -e "Graphana: Username: admin Password: $(cat /tmp/ghafana_password.txt)\n"  >> /tmp/password.info'
+  become: true
+
+- name: Get argoCD password into file /tmp/password.info
+  ansible.builtin.shell:
+    cmd: 'echo -e "ArgoCD: Username: admin Password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)\n"  >> /tmp/password.info'
+  become: true
+
+- name: Create summaryfile
+  ansible.builtin.shell:
+    cmd: (cat /tmp/nodeport.info /tmp/password.info) > /mastersummary.txt
+  become: true
+
+- name: Fetch summary
+  fetch:
+    src: /mastersummary.txt
+    dest: /tmp/mastersummary.txt
+    flat: true
+
+- debug:
+    msg: The passwords and ports can be found locally (if not run by pipeline) on /tmp/mastersummary.txt or on the masternode in /mastersummary.txt
