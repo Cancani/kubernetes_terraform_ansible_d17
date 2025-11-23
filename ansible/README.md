@@ -1,9 +1,8 @@
 🚀 Install Kubernetes Cluster Using Ansible on Ubuntu 24.04
+
 📝 Introduction
 
-Setting up a Kubernetes cluster on Ubuntu 24.04 manually can be a time-consuming and error-prone task. Ansible—a powerful open-source automation tool—simplifies this process by automating the provisioning and configuration of all required components. This guide will walk you through deploying a production-ready Kubernetes cluster on Ubuntu 24.04 using Ansible roles.
-
-    Note: In our previous guide, we demonstrated manual deployment on Ubuntu 23.10. This version improves on that by using automation with Ansible.
+Setting up a Kubernetes cluster on Ubuntu 24.04 manually can be a time-consuming and error-prone task. Ansible—a powerful open-source automation tool—simplifies this process by automating the provisioning and configuration of all required components. This guide will walk you through deploying a production-ready Kubernetes cluster on Ubuntu 24.04 using Ansible roles. This guide should show you how to setup the Kubernetes cluster on a AWS infrastructure setup by this [Terraform Manifest](../terraform/)
 
 ✅ Prerequisites
 
@@ -26,56 +25,28 @@ Before proceeding, ensure the following requirements are met:
 Perform these steps on all nodes unless specified otherwise.
 Step 1: Update Packages
 
-sudo apt update -y && sudo apt upgrade -y
-
-Step 2: Create Operational User
-
-sudo adduser sysadmin
-sudo usermod -aG sudo sysadmin
-
-    Log in as sysadmin or configure Ansible to use this user for SSH connections.
+```
+sudo apt-get update
+sudo apt-get install -y python3 python3-pip
+```
 
 🛠️ Install Ansible (Control Node Only)
 
-sudo apt install ansible -y
-
-Generate SSH Key and Share with Nodes
-
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-ssh-copy-id sysadmin@<master_node_ip>
-ssh-copy-id sysadmin@<worker_node_ip>
-
-📁 Project Structure and Ansible Roles
-
-Initialize the required roles:
-
-ansible-galaxy init kubernetes_master
-ansible-galaxy init kubernetes_worker
-ansible-galaxy init kubernetes_network
-
-Create an inventory file (hosts) and a playbook (cluster-setup.yml) to organize and execute your deployment logic.
-
-Example inventory (hosts):
-
-[master]
-master-node ansible_host=<master_node_ip> ansible_user=sysadmin
-
-[workers]
-worker-node ansible_host=<worker_node_ip> ansible_user=sysadmin
+python -m venv ansible_aws
+source ansible_aws/bin/activate
+pip3 install --upgrade pip
+pip3 install ansible-core boto3 awscli
+ansible-galaxy collection install amazon.aws
 
 ▶️ Run the Ansible Playbook
 
 Execute the playbook to deploy the Kubernetes cluster:
 
-ansible-playbook -i hosts cluster-setup.yml
+ansible-playbook -i 03amazon.aws_ec2.yml cluster-setup.yml -u ubuntu
 
 🔍 Validate the Cluster
 
-Once deployment is complete, use kubectl to verify the setup:
-
-kubectl get nodes
-kubectl get pods --all-namespaces
-kubectl get services
+Check the file /tmp/mastersummary.txt for the passwords of the Apps and Ports to connect.
 
 📌 Conclusion
 
