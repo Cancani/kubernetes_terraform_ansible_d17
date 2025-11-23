@@ -86,6 +86,14 @@ resource "aws_security_group" "kubernetes" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+  ingress {
+    description      = "Allow kubernetes ingress traffic from anywhere"
+    from_port        = 30000
+    to_port          = 32767
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   egress {
     from_port        = 0
