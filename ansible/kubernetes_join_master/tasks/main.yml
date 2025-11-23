@@ -10,3 +10,10 @@
   ansible.builtin.shell: sh /tmp/master-join-command
   become: yes
 
+- name: create .kube directoryi and copy kube config file
+  shell: "{{ item }}"
+  loop:
+    - mkdir -p $HOME/.kube
+    - cp /etc/kubernetes/admin.conf $HOME/.kube/config
+    - chown $(id -u):$(id -g) $HOME/.kube/config     
+

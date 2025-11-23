@@ -1,10 +1,10 @@
-- name: Update System-Wide Profile for Kubernetes
-  ansible.builtin.copy:
-    dest: /etc/profile.d/kubernetes.sh
-    content: |
-      export KUBECONFIG=/etc/kubernetes/admin.conf
-      export ANSIBLE_USER="root"
-
+#- name: Update System-Wide Profile for Kubernetes
+#  ansible.builtin.copy:
+#    dest: /etc/profile.d/kubernetes.sh
+#    content: |
+#      export KUBECONFIG=/etc/kubernetes/admin.conf
+#      export ANSIBLE_USER="root"
+#
 #- name: Replace Docker daemon.json configuration
 #  ansible.builtin.copy:
 #    dest: /etc/docker/daemon.json
