@@ -1,2 +1,2 @@
-join_master_count=2
-join_worker_count=3
+join_master_count=0
+join_worker_count=1
