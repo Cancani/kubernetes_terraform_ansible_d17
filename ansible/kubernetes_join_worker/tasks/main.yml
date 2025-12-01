@@ -10,4 +10,4 @@
   ansible.builtin.shell: sh /tmp/worker-join-command
   become: yes
 
-
+#com
